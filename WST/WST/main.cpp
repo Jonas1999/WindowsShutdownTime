@@ -1,33 +1,30 @@
 #include<iostream>
-#include<string>
-using namespace std;
-
-int chour, cmin, thour, tmin, ttime, ctime, totime;
-string stime;
+#include <ctime> 
+#include <string>
+// https://www.cplusplus.com/forum/beginner/222367/
+int targetHour, targetMin, targetTime, currentTime, totalTime;
 
 int main() {
-	cout << ("Windows Shutdown Time v1.0") << endl;
-	cout << "Welcome to Windows Shutdown Time. WST for short." << endl << "This program was made to make it easier to shutdown a PC at a specific time." << endl << "Please enter the current hour in a 24 hour standard" << endl;
-	cin >> chour;
-	cout << "Please enter the current minute." << endl;
-	cin >> cmin;
-	cout << "Please enter the Target hour" << endl;
-	cin >> thour;
-	cout << "Please enter the Target minute" << endl;
-	cin >> tmin;
-	cout << "You have entered that the current time is " << chour << ":" << cmin << " and the target shutdown time is " << thour << ":" << tmin << endl;
-	if (chour > thour) {//if the target hour has a lower value than current hour it gets +24 so it counts properly
-		thour = thour + 24;
+	system("shutdown -a");
+	std::cout << "Windows Shutdown Time v2.0\n";
+	std::cout << "Welcome to Windows Shutdown Time. WST for short.\nThis program was made to make it easier to shutdown a PC at a specific time.\n";
+	std::cout << "Please enter the Target hour\n";
+	std::cin >> targetHour;
+	std::cout << "Please enter the Target minute\n";
+	std::cin >> targetMin;
+	const std::time_t now = std::time(nullptr);
+	const std::tm calendar_time = *std::localtime(std::addressof(now));
+	std::cout << "The current time is " << calendar_time.tm_hour << ":" << calendar_time.tm_min << " and the target shutdown time is " << targetHour << ":" << targetMin << '\n';
+	if (calendar_time.tm_hour > targetHour) {//if the target hour has a lower value than current hour it gets +24 so it counts properly
+		targetHour = targetHour + 24;
 	}
-	chour = chour * 3600;
-	thour = thour * 3600;
-	tmin = tmin * 60;
-	cmin = cmin * 60;
-	ctime = chour + cmin;
-	ttime = thour + tmin;
-	totime = ttime - ctime;
+	targetHour = targetHour * 3600;
+	targetMin = targetMin * 60;
+	currentTime = (calendar_time.tm_hour * 3600) + (calendar_time.tm_min * 60);
+	targetTime = targetHour + targetMin;
+	totalTime = targetTime - currentTime;
 
-	string stime = "shutdown -s /f -t " + to_string(totime);
+	std::string stime = "shutdown -s /f -t " + std::to_string(totalTime);
 	system(stime.c_str());
 	system("pause");
 	return 0;
