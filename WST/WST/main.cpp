@@ -1,11 +1,13 @@
 #include<iostream>
 #include <ctime> 
 #include <string>
+#pragma warning(disable : 4996) //_CRT_SECURE_NO_WARNINGS
 // https://www.cplusplus.com/forum/beginner/222367/
 int targetHour, targetMin, targetTime, currentTime, totalTime;
 
 int main() {
 	system("shutdown -a");
+	system("cls");
 	std::cout << "Windows Shutdown Time v2.0\n";
 	std::cout << "Welcome to Windows Shutdown Time. WST for short.\nThis program was made to make it easier to shutdown a PC at a specific time.\n";
 	std::cout << "Please enter the Target hour\n";
